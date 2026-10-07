@@ -1,0 +1,137 @@
+package su.catlean;
+
+import java.lang.invoke.MethodHandles;
+import javax.crypto.Cipher;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.DESKeySpec;
+import javax.crypto.spec.IvParameterSpec;
+import kotlin.enums.EnumEntries;
+import kotlin.enums.EnumEntriesKt;
+import org.jetbrains.annotations.NotNull;
+
+/* JADX WARN: Failed to restore enum class, 'enum' modifier and super class removed */
+/* JADX INFO: loaded from: CatLean-Client-Mod-Fabric-1.21.11.jar:su/catlean/b3.class */
+final class b3 {
+    public static final b3 KIT;
+    public static final b3 HOME;
+    public static final b3 BACK;
+    public static final b3 CUSTOM;
+    private static final b3[] h;
+    private static final EnumEntries Z;
+
+    private b3(String str, int i) {
+    }
+
+    public static b3[] values() {
+        return (b3[]) h.clone();
+    }
+
+    public static b3 valueOf(String value) {
+        return (b3) Enum.valueOf(b3.class, value);
+    }
+
+    @NotNull
+    public static EnumEntries X() {
+        return Z;
+    }
+
+    private static final b3[] I() {
+        return new b3[]{KIT, HOME, BACK, CUSTOM};
+    }
+
+    static {
+        int i;
+        long jA = yz.a(-8863713311114809187L, 5003379275313291898L, MethodHandles.lookup().lookupClass()).a(163519913788066L) ^ 48168640236505L;
+        Cipher cipher = Cipher.getInstance("DES/CBC/PKCS5Padding");
+        SecretKeyFactory secretKeyFactory = SecretKeyFactory.getInstance("DES");
+        byte[] bArr = new byte[8];
+        bArr[0] = (byte) (jA >>> 56);
+        for (int i2 = 1; i2 < 8; i2++) {
+            bArr[i2] = (byte) ((jA << (i2 * 8)) >>> 56);
+        }
+        cipher.init(2, secretKeyFactory.generateSecret(new DESKeySpec(bArr)), new IvParameterSpec(new byte[8]));
+        String[] strArr = new String[4];
+        int i3 = 0;
+        String str = "\\¬ÇÄÚôæ?\b¤\fe+5Ò\u0083G";
+        int length = "\\¬ÇÄÚôæ?\b¤\fe+5Ò\u0083G".length();
+        char cCharAt = '\b';
+        int i4 = -1;
+        while (true) {
+            int i5 = i4 + 1;
+            String strSubstring = str.substring(i5, i5 + cCharAt);
+            byte b = -1;
+            while (true) {
+                String str2 = strSubstring;
+                byte b2 = b;
+                String strIntern = a(cipher.doFinal(str2.getBytes("ISO-8859-1"))).intern();
+                switch (b2) {
+                    case 0:
+                        int i6 = i3;
+                        i3++;
+                        strArr[i6] = strIntern;
+                        int i7 = i5 + cCharAt;
+                        i = i7;
+                        if (i7 >= length) {
+                            KIT = new b3(strArr[2], 0);
+                            HOME = new b3(strArr[1], 1);
+                            BACK = new b3(strArr[3], 2);
+                            CUSTOM = new b3(strArr[0], 3);
+                            h = I();
+                            Z = EnumEntriesKt.enumEntries(h);
+                            return;
+                        }
+                        cCharAt = str.charAt(i);
+                        break;
+                        break;
+                    default:
+                        int i8 = i3;
+                        i3++;
+                        strArr[i8] = strIntern;
+                        int i9 = i5 + cCharAt;
+                        i4 = i9;
+                        if (i9 < length) {
+                        }
+                        str = "c0²\u001b\u0014ølÞ\bhhØK¯\r\u0087Ö";
+                        length = "c0²\u001b\u0014ølÞ\bhhØK¯\r\u0087Ö".length();
+                        cCharAt = '\b';
+                        i = -1;
+                        break;
+                        break;
+                }
+                i5 = i + 1;
+                strSubstring = str.substring(i5, i5 + cCharAt);
+                b = 0;
+            }
+            cCharAt = str.charAt(i4);
+        }
+    }
+
+    private static String a(byte[] bArr) {
+        int i = 0;
+        int length = bArr.length;
+        char[] cArr = new char[length];
+        int i2 = 0;
+        while (i2 < length) {
+            int i3 = 255 & bArr[i2];
+            if (i3 < 192) {
+                int i4 = i;
+                i++;
+                cArr[i4] = (char) i3;
+            } else if (i3 < 224) {
+                i2++;
+                int i5 = i;
+                i++;
+                cArr[i5] = (char) (((char) (((char) (i3 & 31)) << 6)) | ((char) (bArr[i2] & 63)));
+            } else if (i2 < length - 2) {
+                int i6 = i2 + 1;
+                char c = (char) (((char) (((char) (i3 & 15)) << '\f')) | (((char) (bArr[i6] & 63)) << 6));
+                i2 = i6 + 1;
+                int i7 = i;
+                i++;
+                cArr[i7] = (char) (c | ((char) (bArr[i2] & 63)));
+            }
+            i2++;
+        }
+        return new String(cArr, 0, i);
+    }
+}

@@ -1,0 +1,65 @@
+package kotlinx.serialization.json.internal;
+
+import java.util.Map;
+import kotlin.NoWhenBranchMatchedException;
+import kotlin.Unit;
+import kotlin.jvm.functions.Function1;
+import kotlin.jvm.internal.Intrinsics;
+import kotlinx.serialization.json.Json;
+import kotlinx.serialization.json.JsonArray;
+import kotlinx.serialization.json.JsonArraySerializer;
+import kotlinx.serialization.json.JsonElement;
+import kotlinx.serialization.json.JsonObject;
+import kotlinx.serialization.json.JsonObjectSerializer;
+import kotlinx.serialization.json.JsonPrimitive;
+import org.jetbrains.annotations.NotNull;
+
+/* JADX INFO: compiled from: TreeJsonEncoder.kt */
+/* JADX INFO: loaded from: CatLean-Client-Mod-Fabric-1.21.11.jar:kotlinx/serialization/json/internal/JsonTreeMapEncoder.class */
+final class JsonTreeMapEncoder extends JsonTreeEncoder {
+    private String tag;
+    private boolean isKey;
+
+    /* JADX WARN: 'super' call moved to the top of the method (can break code semantics) */
+    public JsonTreeMapEncoder(@NotNull Json json, @NotNull Function1<? super JsonElement, Unit> nodeConsumer) {
+        super(json, nodeConsumer);
+        Intrinsics.checkNotNullParameter(json, "json");
+        Intrinsics.checkNotNullParameter(nodeConsumer, "nodeConsumer");
+        this.isKey = true;
+    }
+
+    @Override // kotlinx.serialization.json.internal.JsonTreeEncoder, kotlinx.serialization.json.internal.AbstractJsonTreeEncoder
+    public void putElement(@NotNull String key, @NotNull JsonElement element) {
+        Intrinsics.checkNotNullParameter(key, "key");
+        Intrinsics.checkNotNullParameter(element, "element");
+        if (this.isKey) {
+            if (element instanceof JsonPrimitive) {
+                this.tag = ((JsonPrimitive) element).getContent();
+                this.isKey = false;
+                return;
+            } else {
+                if (element instanceof JsonObject) {
+                    throw JsonExceptionsKt.InvalidKeyKindException(JsonObjectSerializer.INSTANCE.getDescriptor());
+                }
+                if (!(element instanceof JsonArray)) {
+                    throw new NoWhenBranchMatchedException();
+                }
+                throw JsonExceptionsKt.InvalidKeyKindException(JsonArraySerializer.INSTANCE.getDescriptor());
+            }
+        }
+        Map<String, JsonElement> content = getContent();
+        String str = this.tag;
+        if (str == null) {
+            Intrinsics.throwUninitializedPropertyAccessException("tag");
+            str = null;
+        }
+        content.put(str, element);
+        this.isKey = true;
+    }
+
+    @Override // kotlinx.serialization.json.internal.JsonTreeEncoder, kotlinx.serialization.json.internal.AbstractJsonTreeEncoder
+    @NotNull
+    public JsonElement getCurrent() {
+        return new JsonObject(getContent());
+    }
+}

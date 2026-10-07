@@ -1,0 +1,319 @@
+package su.catlean;
+
+import java.io.File;
+import java.lang.invoke.MethodHandles;
+import java.lang.invoke.MethodType;
+import java.lang.invoke.MutableCallSite;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import javax.crypto.Cipher;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.DESKeySpec;
+import javax.crypto.spec.IvParameterSpec;
+import kotlin.io.FilesKt;
+import kotlin.jvm.internal.Intrinsics;
+import kotlinx.serialization.json.Json;
+import org.jetbrains.annotations.NotNull;
+
+/* JADX INFO: loaded from: CatLean-Client-Mod-Fabric-1.21.11.jar:su/catlean/g4.class */
+public final class g4 implements co {
+
+    @NotNull
+    private final Json z;
+
+    @NotNull
+    private final File g;
+    public po v;
+    private static final String[] b;
+    private static final String[] c;
+    private static final long a = yz.a(-7573330238437348837L, -4944645022501052395L, MethodHandles.lookup().lookupClass()).a(10006981304051L);
+    private static final Map d = new HashMap(13);
+
+    public g4(@NotNull Json json, long a2) {
+        long j = a ^ a2;
+        Intrinsics.checkNotNullParameter(json, (String) a(MethodHandles.lookup(), "l", MethodType.methodType(String.class, Integer.TYPE, Long.TYPE)).dynamicInvoker().invoke(18583, 1735075612135392426L ^ j) /* invoke-custom */);
+        this.z = json;
+        this.g = new File(mj.v(), (String) a(MethodHandles.lookup(), "l", MethodType.methodType(String.class, Integer.TYPE, Long.TYPE)).dynamicInvoker().invoke(32334, 1430844493963735669L ^ j) /* invoke-custom */);
+    }
+
+    /* JADX WARN: Multi-variable type inference failed */
+    /* JADX WARN: Type inference failed for: r0v1, types: [long] */
+    /* JADX WARN: Type inference failed for: r0v5, types: [su.catlean.po] */
+    @NotNull
+    public final po Z(long j) throws Exception {
+        Object obj = a ^ j;
+        try {
+            obj = this.v;
+            if (obj != 0) {
+                return obj;
+            }
+            Intrinsics.throwUninitializedPropertyAccessException((String) a(MethodHandles.lookup(), "l", MethodType.methodType(String.class, Integer.TYPE, Long.TYPE)).dynamicInvoker().invoke(112, 1308481706586034552L ^ obj) /* invoke-custom */);
+            return null;
+        } catch (NumberFormatException unused) {
+            throw (Exception) vm.a(MethodHandles.lookup(), "Å", MethodType.methodType(Exception.class, Object.class, Long.TYPE, Long.TYPE)).dynamicInvoker().invoke(obj, 143303875413446198L, obj) /* invoke-custom */;
+        }
+    }
+
+    public final void j(long a2, short a3, @NotNull po poVar) {
+        Intrinsics.checkNotNullParameter(poVar, (String) a(MethodHandles.lookup(), "l", MethodType.methodType(String.class, Integer.TYPE, Long.TYPE)).dynamicInvoker().invoke(10316, 1649540460038806000L ^ (((a2 << 16) | ((((long) a3) << 48) >>> 48)) ^ a)) /* invoke-custom */);
+        this.v = poVar;
+    }
+
+    /* JADX WARN: Multi-variable type inference failed */
+    /* JADX WARN: Type inference failed for: r0v1, types: [long] */
+    /* JADX WARN: Type inference failed for: r0v10 */
+    /* JADX WARN: Type inference failed for: r0v2, types: [java.lang.Object] */
+    /* JADX WARN: Type inference failed for: r0v4 */
+    /* JADX WARN: Type inference failed for: r0v5 */
+    /* JADX WARN: Type inference failed for: r0v6 */
+    /* JADX WARN: Type inference failed for: r0v7 */
+    /* JADX WARN: Type inference failed for: r0v8, types: [su.catlean.g4] */
+    /* JADX WARN: Type inference failed for: r0v9 */
+    @Override // su.catlean.co
+    public void w(long j) throws Exception {
+        ?? r0;
+        po poVar;
+        po poVar2;
+        ?? r02;
+        ?? r03 = j;
+        long j2 = r03 >>> 16;
+        int i = (int) (((j ^ 5002786454352L) << 48) >>> 48);
+        long j3 = r03 ^ 133444245573078L;
+        try {
+            r03 = this;
+            if (this.g.createNewFile()) {
+                poVar2 = new po(new ArrayList(), j3);
+                r02 = r03;
+            } else {
+                try {
+                    r0 = r03;
+                    Json json = this.z;
+                    String text$default = FilesKt.readText$default(this.g, null, 1, null);
+                    json.getSerializersModule();
+                    poVar = (po) json.decodeFromString(po.Y.u(), text$default);
+                } catch (Exception e) {
+                    r0 = r03;
+                    zf.x().warn((String) a(MethodHandles.lookup(), "l", MethodType.methodType(String.class, Integer.TYPE, Long.TYPE)).dynamicInvoker().invoke(31957, 4157858625969428424L ^ j) /* invoke-custom */);
+                    poVar = new po(new ArrayList(), j3);
+                }
+                poVar2 = poVar;
+                r02 = r0;
+            }
+            r02.j(j2, (short) i, poVar2);
+        } catch (Exception unused) {
+            throw (Exception) vm.a(MethodHandles.lookup(), "Å", MethodType.methodType(Exception.class, Object.class, Long.TYPE, Long.TYPE)).dynamicInvoker().invoke(r03, -4906331847234014174L, j) /* invoke-custom */;
+        }
+    }
+
+    @Override // su.catlean.co
+    public void h(int i, int i2, byte b2) throws Exception {
+        File file = this.g;
+        Json json = this.z;
+        po poVarZ = Z((((((long) i) << 32) | ((((long) i2) << 40) >>> 32)) | ((((long) b2) << 56) >>> 56)) ^ 133148621129362L);
+        json.getSerializersModule();
+        FilesKt.writeText$default(file, json.encodeToString(po.Y.u(), poVarZ), null, 2, null);
+    }
+
+    static {
+        int i;
+        long j = a ^ 127484116305327L;
+        Cipher cipher = Cipher.getInstance("DES/CBC/PKCS5Padding");
+        SecretKeyFactory secretKeyFactory = SecretKeyFactory.getInstance("DES");
+        byte[] bArr = new byte[8];
+        bArr[0] = (byte) (j >>> 56);
+        for (int i2 = 1; i2 < 8; i2++) {
+            bArr[i2] = (byte) ((j << (i2 * 8)) >>> 56);
+        }
+        cipher.init(2, secretKeyFactory.generateSecret(new DESKeySpec(bArr)), new IvParameterSpec(new byte[8]));
+        String[] strArr = new String[5];
+        int i3 = 0;
+        String str = "õ.näÊë®Qé1÷?Ç÷[j`\u0085hõ\u008b)å£Ï«>4÷\u0090>kÃb\u0000Ü\u008ai\u008aì\"}ÇÉ\u00adðÍ°\u001b\u0092d\u0083nI²\u0082º5N~FÑü-\u000eE¸©T\u0087~\u001c\u0097kMÂÿ°\u0018cÇ¹-º§\u0097\u0081O¥¿\u0099,Ä\u008f+8\u0003µ\u0085UÓ\u000füâÁD\u000f²ÏYîb\u0090  0\u0018À;Ý°þ\u008a-\u001e\u0084\u0090rAéb\u009c´?£°Yÿ)\u0091¾ìÓvX\u008e";
+        int length = "õ.näÊë®Qé1÷?Ç÷[j`\u0085hõ\u008b)å£Ï«>4÷\u0090>kÃb\u0000Ü\u008ai\u008aì\"}ÇÉ\u00adðÍ°\u001b\u0092d\u0083nI²\u0082º5N~FÑü-\u000eE¸©T\u0087~\u001c\u0097kMÂÿ°\u0018cÇ¹-º§\u0097\u0081O¥¿\u0099,Ä\u008f+8\u0003µ\u0085UÓ\u000füâÁD\u000f²ÏYîb\u0090  0\u0018À;Ý°þ\u008a-\u001e\u0084\u0090rAéb\u009c´?£°Yÿ)\u0091¾ìÓvX\u008e".length();
+        char cCharAt = 16;
+        int i4 = -1;
+        while (true) {
+            int i5 = i4 + 1;
+            String strSubstring = str.substring(i5, i5 + cCharAt);
+            byte b2 = -1;
+            while (true) {
+                String str2 = strSubstring;
+                byte b3 = b2;
+                String strIntern = a(cipher.doFinal(str2.getBytes("ISO-8859-1"))).intern();
+                switch (b3) {
+                    case 0:
+                        int i6 = i3;
+                        i3++;
+                        strArr[i6] = strIntern;
+                        int i7 = i5 + cCharAt;
+                        i = i7;
+                        if (i7 >= length) {
+                            b = strArr;
+                            c = new String[5];
+                            return;
+                        }
+                        cCharAt = str.charAt(i);
+                        break;
+                    default:
+                        int i8 = i3;
+                        i3++;
+                        strArr[i8] = strIntern;
+                        int i9 = i5 + cCharAt;
+                        i4 = i9;
+                        if (i9 < length) {
+                        }
+                        str = "\u0098z}½Ê,qnÈZê9\u0005\u008cfö\u0010Í\u0088?©\u00808[@î~O\fjùùI";
+                        length = "\u0098z}½Ê,qnÈZê9\u0005\u008cfö\u0010Í\u0088?©\u00808[@î~O\fjùùI".length();
+                        cCharAt = 16;
+                        i = -1;
+                        break;
+                        break;
+                }
+                i5 = i + 1;
+                strSubstring = str.substring(i5, i5 + cCharAt);
+                b2 = 0;
+            }
+            cCharAt = str.charAt(i4);
+        }
+    }
+
+    private static Exception a(Exception exc) {
+        return exc;
+    }
+
+    private static String a(byte[] bArr) {
+        int i = 0;
+        int length = bArr.length;
+        char[] cArr = new char[length];
+        int i2 = 0;
+        while (i2 < length) {
+            int i3 = 255 & bArr[i2];
+            if (i3 < 192) {
+                int i4 = i;
+                i++;
+                cArr[i4] = (char) i3;
+            } else if (i3 < 224) {
+                i2++;
+                int i5 = i;
+                i++;
+                cArr[i5] = (char) (((char) (((char) (i3 & 31)) << 6)) | ((char) (bArr[i2] & 63)));
+            } else if (i2 < length - 2) {
+                int i6 = i2 + 1;
+                char c2 = (char) (((char) (((char) (i3 & 15)) << '\f')) | (((char) (bArr[i6] & 63)) << 6));
+                i2 = i6 + 1;
+                int i7 = i;
+                i++;
+                cArr[i7] = (char) (c2 | ((char) (bArr[i2] & 63)));
+            }
+            i2++;
+        }
+        return new String(cArr, 0, i);
+    }
+
+    private static String a(int i, long j) throws InvalidKeyException, InvalidAlgorithmParameterException {
+        int i2 = (i ^ ((int) (j & 32767))) ^ 20493;
+        if (c[i2] == null) {
+            try {
+                Long lValueOf = Long.valueOf(Thread.currentThread().threadId());
+                Object[] objArr = (Object[]) d.get(lValueOf);
+                if (objArr == null) {
+                    objArr = new Object[]{Cipher.getInstance("DES/CBC/PKCS5Padding"), SecretKeyFactory.getInstance("DES"), new IvParameterSpec(new byte[8])};
+                    d.put(lValueOf, objArr);
+                }
+                byte[] bArr = new byte[8];
+                bArr[0] = (byte) (j >>> 56);
+                for (int i3 = 1; i3 < 8; i3++) {
+                    bArr[i3] = (byte) ((j << (i3 * 8)) >>> 56);
+                }
+                ((Cipher) objArr[0]).init(2, ((SecretKeyFactory) objArr[1]).generateSecret(new DESKeySpec(bArr)), (IvParameterSpec) objArr[2]);
+                c[i2] = a(((Cipher) objArr[0]).doFinal(b[i2].getBytes("ISO-8859-1")));
+            } catch (Exception e) {
+                throw new RuntimeException("su/catlean/g4", e);
+            }
+        }
+        return c[i2];
+    }
+
+    private static Object a(MethodHandles.Lookup lookup, MutableCallSite mutableCallSite, String str, Object[] objArr) throws InvalidKeyException, InvalidAlgorithmParameterException {
+        String strA = a(((Integer) objArr[0]).intValue(), ((Long) objArr[1]).longValue());
+        mutableCallSite.setTarget(MethodHandles.dropArguments(MethodHandles.constant(String.class, strA), 0, (Class<?>[]) new Class[]{Integer.TYPE, Long.TYPE}));
+        return strA;
+    }
+
+    /*  JADX ERROR: Failed to decode insn: 0x000A: CONST
+        jadx.plugins.input.java.utils.JavaClassParseException: Unsupported constant type: METHOD_HANDLE
+        	at jadx.plugins.input.java.data.code.decoders.LoadConstDecoder.decode(LoadConstDecoder.java:65)
+        	at jadx.plugins.input.java.data.code.JavaInsnData.decode(JavaInsnData.java:46)
+        	at jadx.core.dex.instructions.InsnDecoder.lambda$process$0(InsnDecoder.java:50)
+        	at jadx.plugins.input.java.data.code.JavaCodeReader.visitInstructions(JavaCodeReader.java:85)
+        	at jadx.core.dex.instructions.InsnDecoder.process(InsnDecoder.java:46)
+        	at jadx.core.dex.nodes.MethodNode.load(MethodNode.java:164)
+        	at jadx.core.dex.nodes.ClassNode.load(ClassNode.java:462)
+        	at jadx.core.ProcessClass.process(ProcessClass.java:77)
+        	at jadx.core.ProcessClass.generateCode(ProcessClass.java:121)
+        	at jadx.core.dex.nodes.ClassNode.generateClassCode(ClassNode.java:405)
+        	at jadx.core.dex.nodes.ClassNode.decompile(ClassNode.java:393)
+        	at jadx.core.dex.nodes.ClassNode.getCode(ClassNode.java:343)
+        */
+    private static java.lang.invoke.CallSite a(java.lang.invoke.MethodHandles.Lookup r8, java.lang.String r9, java.lang.invoke.MethodType r10) {
+        /*
+            java.lang.invoke.MutableCallSite r0 = new java.lang.invoke.MutableCallSite
+            r1 = r0
+            r2 = r10
+            r1.<init>(r2)
+            r11 = r0
+            r0 = r11
+            // decode failed: Unsupported constant type: METHOD_HANDLE
+            r1 = 2
+            r2 = r10
+            int r2 = r2.parameterCount()
+            java.lang.invoke.MethodHandle r0 = r0.asCollector(r1, r2)
+            r1 = 0
+            r2 = 3
+            java.lang.Object[] r2 = new java.lang.Object[r2]
+            r3 = r2
+            r4 = 0
+            r5 = r8
+            r3[r4] = r5
+            r3 = r2
+            r4 = 1
+            r5 = r11
+            r3[r4] = r5
+            r3 = r2
+            r4 = 2
+            r5 = r9
+            r3[r4] = r5
+            java.lang.invoke.MethodHandle r0 = java.lang.invoke.MethodHandles.insertArguments(r0, r1, r2)
+            r1 = r10
+            java.lang.invoke.MethodHandle r0 = java.lang.invoke.MethodHandles.explicitCastArguments(r0, r1)
+            r-1.setTarget(r0)
+            goto L62
+            r12 = r-2
+            java.lang.RuntimeException r-2 = new java.lang.RuntimeException
+            r-1 = r-2
+            java.lang.StringBuilder r0 = new java.lang.StringBuilder
+            r1 = r0
+            r1.<init>()
+            java.lang.String r1 = "su/catlean/g4"
+            java.lang.StringBuilder r0 = r0.append(r1)
+            java.lang.String r1 = " : "
+            java.lang.StringBuilder r0 = r0.append(r1)
+            r1 = r9
+            java.lang.StringBuilder r0 = r0.append(r1)
+            java.lang.String r1 = " : "
+            java.lang.StringBuilder r0 = r0.append(r1)
+            r1 = r10
+            java.lang.String r1 = r1.toString()
+            java.lang.StringBuilder r0 = r0.append(r1)
+            java.lang.String r0 = r0.toString()
+            r1 = r12
+            r-1.<init>(r0, r1)
+            throw r-2
+            r-1 = r11
+            return r-1
+        */
+        throw new UnsupportedOperationException("Method not decompiled: su.catlean.g4.a(java.lang.invoke.MethodHandles$Lookup, java.lang.String, java.lang.invoke.MethodType):java.lang.invoke.CallSite");
+    }
+}

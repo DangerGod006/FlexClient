@@ -1,0 +1,101 @@
+package su.catlean;
+
+import java.lang.invoke.MethodHandles;
+import javax.crypto.Cipher;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.DESKeySpec;
+import javax.crypto.spec.IvParameterSpec;
+import kotlin.enums.EnumEntries;
+import kotlin.enums.EnumEntriesKt;
+import org.jetbrains.annotations.NotNull;
+
+/* JADX WARN: Failed to restore enum class, 'enum' modifier and super class removed */
+/* JADX INFO: loaded from: CatLean-Client-Mod-Fabric-1.21.11.jar:su/catlean/wk.class */
+final class wk {
+    public static final wk DOT;
+    public static final wk DEFAULT;
+    private static final wk[] z;
+    private static final EnumEntries k;
+
+    private wk(String str, int i) {
+    }
+
+    public static wk[] values() {
+        return (wk[]) z.clone();
+    }
+
+    public static wk valueOf(String value) {
+        return (wk) Enum.valueOf(wk.class, value);
+    }
+
+    @NotNull
+    public static EnumEntries L() {
+        return k;
+    }
+
+    private static final wk[] y() {
+        return new wk[]{DOT, DEFAULT};
+    }
+
+    static {
+        long jA = yz.a(-1323350578329600178L, 7492291745303336026L, MethodHandles.lookup().lookupClass()).a(48953630061000L) ^ 28225477239200L;
+        Cipher cipher = Cipher.getInstance("DES/CBC/PKCS5Padding");
+        SecretKeyFactory secretKeyFactory = SecretKeyFactory.getInstance("DES");
+        byte[] bArr = new byte[8];
+        bArr[0] = (byte) (jA >>> 56);
+        for (int i = 1; i < 8; i++) {
+            bArr[i] = (byte) ((jA << (i * 8)) >>> 56);
+        }
+        cipher.init(2, secretKeyFactory.generateSecret(new DESKeySpec(bArr)), new IvParameterSpec(new byte[8]));
+        String[] strArr = new String[2];
+        int i2 = 0;
+        int length = "¯\u001b5!Iª;ü\b\u0015|ày¦üþS".length();
+        char cCharAt = '\b';
+        int i3 = -1;
+        while (true) {
+            int i4 = i3 + 1;
+            int i5 = i2;
+            i2++;
+            strArr[i5] = a(cipher.doFinal("¯\u001b5!Iª;ü\b\u0015|ày¦üþS".substring(i4, i4 + cCharAt).getBytes("ISO-8859-1"))).intern();
+            int i6 = i4 + cCharAt;
+            i3 = i6;
+            if (i6 >= length) {
+                DOT = new wk(strArr[1], 0);
+                DEFAULT = new wk(strArr[0], 1);
+                z = y();
+                k = EnumEntriesKt.enumEntries(z);
+                return;
+            }
+            cCharAt = "¯\u001b5!Iª;ü\b\u0015|ày¦üþS".charAt(i3);
+        }
+    }
+
+    private static String a(byte[] bArr) {
+        int i = 0;
+        int length = bArr.length;
+        char[] cArr = new char[length];
+        int i2 = 0;
+        while (i2 < length) {
+            int i3 = 255 & bArr[i2];
+            if (i3 < 192) {
+                int i4 = i;
+                i++;
+                cArr[i4] = (char) i3;
+            } else if (i3 < 224) {
+                i2++;
+                int i5 = i;
+                i++;
+                cArr[i5] = (char) (((char) (((char) (i3 & 31)) << 6)) | ((char) (bArr[i2] & 63)));
+            } else if (i2 < length - 2) {
+                int i6 = i2 + 1;
+                char c = (char) (((char) (((char) (i3 & 15)) << '\f')) | (((char) (bArr[i6] & 63)) << 6));
+                i2 = i6 + 1;
+                int i7 = i;
+                i++;
+                cArr[i7] = (char) (c | ((char) (bArr[i2] & 63)));
+            }
+            i2++;
+        }
+        return new String(cArr, 0, i);
+    }
+}

@@ -1,0 +1,48 @@
+package io.netty.handler.proxy;
+
+import io.netty.util.internal.ObjectUtil;
+import io.netty.util.internal.StringUtil;
+import java.net.SocketAddress;
+import kotlin.uuid.Uuid;
+
+/* JADX INFO: loaded from: CatLean-Client-Mod-Fabric-1.21.11.jar:io/netty/handler/proxy/ProxyConnectionEvent.class */
+public final class ProxyConnectionEvent {
+    private final String protocol;
+    private final String authScheme;
+    private final SocketAddress proxyAddress;
+    private final SocketAddress destinationAddress;
+    private String strVal;
+
+    public ProxyConnectionEvent(String protocol, String authScheme, SocketAddress proxyAddress, SocketAddress destinationAddress) {
+        this.protocol = (String) ObjectUtil.checkNotNull(protocol, "protocol");
+        this.authScheme = (String) ObjectUtil.checkNotNull(authScheme, "authScheme");
+        this.proxyAddress = (SocketAddress) ObjectUtil.checkNotNull(proxyAddress, "proxyAddress");
+        this.destinationAddress = (SocketAddress) ObjectUtil.checkNotNull(destinationAddress, "destinationAddress");
+    }
+
+    public String protocol() {
+        return this.protocol;
+    }
+
+    public String authScheme() {
+        return this.authScheme;
+    }
+
+    public <T extends SocketAddress> T proxyAddress() {
+        return (T) this.proxyAddress;
+    }
+
+    public <T extends SocketAddress> T destinationAddress() {
+        return (T) this.destinationAddress;
+    }
+
+    public String toString() {
+        if (this.strVal != null) {
+            return this.strVal;
+        }
+        StringBuilder buf = new StringBuilder(Uuid.SIZE_BITS).append(StringUtil.simpleClassName(this)).append('(').append(this.protocol).append(", ").append(this.authScheme).append(", ").append(this.proxyAddress).append(" => ").append(this.destinationAddress).append(')');
+        String string = buf.toString();
+        this.strVal = string;
+        return string;
+    }
+}
